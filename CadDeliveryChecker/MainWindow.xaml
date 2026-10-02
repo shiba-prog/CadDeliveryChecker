@@ -5,7 +5,10 @@
         Height="650"
         Width="1000"
         MinHeight="500"
-        MinWidth="750">
+        MinWidth="750"
+        AllowDrop="True"
+        DragOver="Window_DragOver"
+        Drop="Window_Drop">
 
     <Grid Margin="20">
 
@@ -81,6 +84,21 @@
                 Click="ClearSearch_Click"/>
 
         </Grid>
+
+        <Border
+    Grid.Row="3"
+    BorderBrush="Gray"
+    BorderThickness="1"
+    CornerRadius="6"
+    Padding="8">
+
+            <TextBlock
+        Text="フォルダをここへドラッグ＆ドロップできます"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Foreground="Gray" Height="537"/>
+
+        </Border>
 
         <!-- ファイル一覧 -->
         <DataGrid

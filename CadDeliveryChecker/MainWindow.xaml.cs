@@ -30,13 +30,7 @@ namespace CadDeliveryChecker
             if (dialog.ShowDialog() != true)
                 return;
 
-            _selectedFolder = dialog.FolderName;
-
-            FolderPathText.Text = _selectedFolder;
-
-            LoadFiles();
-
-            SearchBox.Focus();
+            LoadFolder(dialog.FolderName);
         }
 
         private void LoadFiles()
@@ -197,6 +191,64 @@ namespace CadDeliveryChecker
                 return $"{bytes / 1024d:F1} KB";
 
             return $"{bytes} B";
+        }
+
+        private void Window_DragOver(
+    object sender,
+    DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effects = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effects = DragDropEffects.None;
+            }
+
+            e.Handled = true;
+        }
+
+        private void Window_Drop(
+            object sender,
+            DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+                return;
+
+            string[] paths =
+                (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            if (paths.Length == 0)
+                return;
+
+            string path = paths[0];
+
+            if (Directory.Exists(path))
+            {
+                LoadFolder(path);
+            }
+            else
+            {
+                MessageBox.Show(
+                    "フォルダをドラッグ＆ドロップしてください。",
+                    "フォルダではありません",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
+        }
+
+        private void LoadFolder(string folder)
+        {
+            _selectedFolder = folder;
+
+            FolderPathText.Text = folder;
+
+            SearchBox.Clear();
+
+            LoadFiles();
+
+            SearchBox.Focus();
         }
     }
 
