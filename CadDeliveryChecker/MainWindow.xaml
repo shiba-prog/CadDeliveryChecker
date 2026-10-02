@@ -1,0 +1,143 @@
+﻿<Window x:Class="CadDeliveryChecker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="CAD Delivery Checker"
+        Height="650"
+        Width="1000"
+        MinHeight="500"
+        MinWidth="750">
+
+    <Grid Margin="20">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- タイトル -->
+        <TextBlock
+            Text="CAD Delivery Checker"
+            FontSize="28"
+            FontWeight="SemiBold"
+            Margin="0,0,0,20"/>
+
+        <!-- フォルダ選択 -->
+        <Grid Grid.Row="1"
+              Margin="0,0,0,12">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox
+                x:Name="FolderPathText"
+                Height="36"
+                IsReadOnly="True"
+                VerticalContentAlignment="Center"
+                Margin="0,0,10,0"/>
+
+            <Button
+                Grid.Column="1"
+                Content="フォルダを選択"
+                Width="140"
+                Height="36"
+                Click="SelectFolder_Click"/>
+
+        </Grid>
+
+        <!-- 検索 -->
+        <Grid Grid.Row="2"
+              Margin="0,0,0,12">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Text="検索"
+                VerticalAlignment="Center"
+                Margin="0,0,10,0"
+                FontSize="15"/>
+
+            <TextBox
+                x:Name="SearchBox"
+                Grid.Column="1"
+                Height="36"
+                VerticalContentAlignment="Center"
+                TextChanged="SearchBox_TextChanged"
+                Margin="0,0,10,0"/>
+
+            <Button
+                Grid.Column="2"
+                Content="クリア"
+                Width="80"
+                Height="36"
+                Click="ClearSearch_Click"/>
+
+        </Grid>
+
+        <!-- ファイル一覧 -->
+        <DataGrid
+            x:Name="FileGrid"
+            Grid.Row="3"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            CanUserAddRows="False"
+            SelectionMode="Single"
+            MouseDoubleClick="FileGrid_MouseDoubleClick">
+
+            <DataGrid.Columns>
+
+                <DataGridTextColumn
+                    Header="名前"
+                    Binding="{Binding Name}"
+                    Width="2*"/>
+
+                <DataGridTextColumn
+                    Header="種類"
+                    Binding="{Binding Extension}"
+                    Width="100"/>
+
+                <DataGridTextColumn
+                    Header="フォルダ"
+                    Binding="{Binding RelativeFolder}"
+                    Width="2*"/>
+
+                <DataGridTextColumn
+                    Header="更新日時"
+                    Binding="{Binding Modified}"
+                    Width="150"/>
+
+                <DataGridTextColumn
+                    Header="サイズ"
+                    Binding="{Binding Size}"
+                    Width="100"/>
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <!-- 下部情報 -->
+        <Border
+            Grid.Row="4"
+            Margin="0,12,0,0"
+            Padding="10"
+            BorderThickness="1"
+            BorderBrush="Gray"
+            CornerRadius="4">
+
+            <TextBlock
+                x:Name="SummaryText"
+                Text="フォルダを選択してください。"/>
+
+        </Border>
+
+    </Grid>
+
+</Window>
